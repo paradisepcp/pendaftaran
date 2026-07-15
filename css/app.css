@@ -103,7 +103,20 @@ select {
   color: #1a73e8;
   font-weight: bold;
 }
-
+/* Tambahan untuk header dashboard + jam berjalan */
+.header-app {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  border-bottom: 2px solid #1a73e8;
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+}
+.header-kiri { font-size: 14px; }
+.header-kanan { display: flex; align-items: center; gap: 12px; font-size: 13px; color: #555; }
+.dashboard { max-width: 700px; } /* lebarkan sedikit karena sekarang ada header 2 kolom */
 /* ============================================================
  * TOMBOL LOGIN
  * ============================================================ */
