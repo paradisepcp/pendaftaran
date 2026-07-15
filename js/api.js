@@ -24,7 +24,7 @@
 // GANTI link ini kalau kamu deploy ulang Apps Script dan
 // mendapat link .../exec yang baru.
 // ------------------------------------------------------------
-const URL_BACKEND = 'https://script.google.com/macros/s/AKfycbyB41PnudAwp4L7UlD6VK0qDeSc98jOun1DmjZ6UVMlkNhM8TvZbyLa9242YUjqxoyf/exec';
+const URL_BACKEND = 'https://script.google.com/macros/s/AKfycby1FYShoahxIAiBjiLCTPBFTNq26qbMinpNHafIhGgG9HJDDJYP9ucsgpGY3NdcV6gG/exec';
 // ------------------------------------------------------------
 // BAGIAN INI SELESAI
 // ------------------------------------------------------------
