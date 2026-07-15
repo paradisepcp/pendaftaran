@@ -1,10 +1,48 @@
+```css
 /* ============================================================
  * APLIKASI    : Sistem Fee BP & PCP
- * MODUL       : Frontend - Gaya Tampilan
+ * MODUL       : Frontend - Gaya Tampilan (CSS)
  * FILE        : app.css
- * VERSION     : 0.0.2
+ * VERSION     : 0.0.3
  * DIPERBARUI  : 15 Juli 2026
+ * HALAMAN     : Login, Dashboard, Pendaftaran Member
+ * ------------------------------------------------------------
+ * ISI FILE INI:
+ * - Layout dasar aplikasi
+ * - Form Login
+ * - Komponen Form (Input & Select)
+ * - Password Show / Hide
+ * - Pilihan Lokasi Kerja
+ * - Header Dashboard
+ * - Form Pendaftaran
+ * - Tabel Listbox
+ * - Modal Konfirmasi
+ * - Tombol Login
+ * - Pesan Sukses & Error
+ *
+ * BOLEH DIEDIT :
+ * - Warna
+ * - Font
+ * - Margin & Padding
+ * - Border & Shadow
+ * - Radius
+ * - Responsive Layout
+ *
+ * HATI-HATI DIEDIT :
+ * - Nama class (.class) yang dipanggil JavaScript
+ * - ID (#id) yang digunakan JavaScript
+ * - Struktur layout utama
+ *
+ * CATATAN :
+ * File CSS ini digunakan oleh seluruh halaman frontend.
+ * Tambahkan section baru jika ada komponen baru agar
+ * mudah dipelihara dan dicari.
  * ============================================================ */
+
+
+/* ------------------------------------------------------------
+ * BAGIAN : Layout Dasar
+ * ------------------------------------------------------------ */
 
 body {
   font-family: Arial, sans-serif;
@@ -17,10 +55,14 @@ body {
 .dashboard {
   max-width: 380px;
   margin: 60px auto;
-  background: white;
+  background: #fff;
   padding: 24px;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard {
+  max-width: 700px;
 }
 
 h1 {
@@ -35,9 +77,10 @@ label {
   font-size: 14px;
 }
 
-/* ============================================================
- * KOMPONEN FORM
- * ============================================================ */
+
+/* ------------------------------------------------------------
+ * BAGIAN : Komponen Form
+ * ------------------------------------------------------------ */
 
 input,
 select {
@@ -48,12 +91,13 @@ select {
   font-size: 15px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  background: white;
+  background: #fff;
 }
 
-/* ============================================================
- * FITUR PASSWORD SHOW / HIDE
- * ============================================================ */
+
+/* ------------------------------------------------------------
+ * BAGIAN : Password Show / Hide
+ * ------------------------------------------------------------ */
 
 .password-wrapper {
   position: relative;
@@ -77,9 +121,10 @@ select {
   padding: 4px;
 }
 
-/* ============================================================
- * PILIHAN LOKASI
- * ============================================================ */
+
+/* ------------------------------------------------------------
+ * BAGIAN : Pilihan Lokasi Kerja
+ * ------------------------------------------------------------ */
 
 .pilihan-lokasi {
   display: flex;
@@ -91,7 +136,7 @@ select {
   flex: 1;
   padding: 10px;
   border: 2px solid #ccc;
-  background: white;
+  background: #fff;
   border-radius: 4px;
   font-size: 15px;
   cursor: pointer;
@@ -103,7 +148,12 @@ select {
   color: #1a73e8;
   font-weight: bold;
 }
-/* Tambahan untuk header dashboard + jam berjalan */
+
+
+/* ------------------------------------------------------------
+ * BAGIAN : Header Dashboard
+ * ------------------------------------------------------------ */
+
 .header-app {
   display: flex;
   justify-content: space-between;
@@ -114,22 +164,40 @@ select {
   padding-bottom: 12px;
   margin-bottom: 16px;
 }
-.header-kiri { font-size: 14px; }
-.header-kanan { display: flex; align-items: center; gap: 12px; font-size: 13px; color: #555; }
-.dashboard { max-width: 700px; } /* lebarkan sedikit karena sekarang ada header 2 kolom */
+
+.header-kiri {
+  font-size: 14px;
+}
+
+.header-kanan {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: #555;
+}
 
 
-/* ============================================================
- * TAMBAHAN: Form Pendaftaran, Tabel Listbox, Modal
- * ============================================================ */
+/* ------------------------------------------------------------
+ * BAGIAN : Form Pendaftaran
+ * ------------------------------------------------------------ */
+
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4px 16px;
 }
+
 @media (max-width: 600px) {
-  .form-grid { grid-template-columns: 1fr; }
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
 }
+
+
+/* ------------------------------------------------------------
+ * BAGIAN : Tabel Listbox
+ * ------------------------------------------------------------ */
 
 .tabel-listbox {
   width: 100%;
@@ -137,47 +205,46 @@ select {
   margin-bottom: 20px;
   font-size: 13px;
 }
-.tabel-listbox th, .tabel-listbox td {
+
+.tabel-listbox th,
+.tabel-listbox td {
   border: 1px solid #ddd;
   padding: 6px 8px;
   text-align: left;
 }
-.tabel-listbox th { background: #f0f2f5; }
-.tabel-listbox tbody tr:hover { background: #e8f0fe; cursor: pointer; }
-.tabel-listbox .kosong { text-align: center; color: #999; cursor: default; }
-.tabel-listbox tbody tr:hover.kosong-row { background: none; }
 
-#pesanPendaftaran.sukses { color: #1e7e34; margin-top: 10px; }
-#pesanPendaftaran.error { color: #d93025; margin-top: 10px; }
-
-.modal-overlay {
-  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.5);
-  display: flex; align-items: center; justify-content: center;
-  z-index: 100;
+.tabel-listbox th {
+  background: #f0f2f5;
 }
-.modal-box {
-  background: white; padding: 20px; border-radius: 8px;
-  max-width: 400px; width: 90%;
+
+.tabel-listbox tbody tr:hover {
+  background: #e8f0fe;
+  cursor: pointer;
 }
-.modal-tombol { display: flex; gap: 8px; margin-top: 16px; }
-.modal-tombol button { flex: 1; padding: 10px; border-radius: 4px; border: 1px solid #ccc; background: white; cursor: pointer; }
-.modal-tombol .btn-utama { background: #1a73e8; color: white; border-color: #1a73e8; }
-.catatan-kecil { color: #999; font-size: 12px; font-style: italic; }
 
-/* ============================================================
- * TOMBOL LOGIN
- * ============================================================ */
+.tabel-listbox .kosong {
+  text-align: center;
+  color: #999;
+  cursor: default;
+}
 
-#btnLogin {
-  width: 100%;
-  margin-top: 20px;
-  padding: 12px;
-  background: #1a73e8;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 15px;
+.tabel-listbox tbody tr.kosong-row:hover {
+  background: transparent;
+}
+
+
+/* ------------------------------------------------------------
+ * BAGIAN : Pesan Sukses & Error
+ * ------------------------------------------------------------ */
+
+#pesanPendaftaran.sukses {
+  color: #1e7e34;
+  margin-top: 10px;
+}
+
+#pesanPendaftaran.error {
+  color: #d93025;
+  margin-top: 10px;
 }
 
 #pesanLogin {
@@ -186,15 +253,96 @@ select {
   font-size: 14px;
 }
 
+
+/* ------------------------------------------------------------
+ * BAGIAN : Modal Konfirmasi
+ * ------------------------------------------------------------ */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal-box {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 90%;
+}
+
+.modal-tombol {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.modal-tombol button {
+  flex: 1;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+}
+
+.modal-tombol .btn-utama {
+  background: #1a73e8;
+  color: #fff;
+  border-color: #1a73e8;
+}
+
+.catatan-kecil {
+  color: #999;
+  font-size: 12px;
+  font-style: italic;
+}
+
+
+/* ------------------------------------------------------------
+ * BAGIAN : Tombol Login
+ * ------------------------------------------------------------ */
+
+#btnLogin {
+  width: 100%;
+  margin-top: 20px;
+  padding: 12px;
+  background: #1a73e8;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+
 /* ============================================================
  * END OF FILE
  * ------------------------------------------------------------
  * RIWAYAT PERUBAHAN
+ *
  * VER 0.0.1
- * - Gaya dasar Login & Dashboard.
+ * - Layout dasar Login & Dashboard.
  *
  * VER 0.0.2
- * - Menambahkan komponen Password Show/Hide.
- * - Menambahkan style untuk elemen <select>.
- * - Merapikan struktur dan dokumentasi CSS.
+ * - Password Show / Hide.
+ * - Style Input & Select.
+ * - Perapihan dokumentasi CSS.
+ *
+ * VER 0.0.3
+ * - Header Dashboard.
+ * - Form Pendaftaran.
+ * - Tabel Listbox.
+ * - Modal Konfirmasi.
+ * - Pesan Sukses & Error.
+ * - Perapihan struktur komentar dan section.
  * ============================================================ */
+```
