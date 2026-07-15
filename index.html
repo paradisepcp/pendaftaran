@@ -1,9 +1,8 @@
 <!-- ============================================================
      FILE    : index.html
-     VERSION : 0.0.2
+     VERSION : 0.0.3
      DIPERBARUI : 15 Juli 2026
-     PERUBAHAN : username jadi dropdown (isi dari getDaftarUsernameAktif),
-                 password dapat tombol toggle lihat/sembunyikan
+     PERUBAHAN : tambah header dashboard dengan jam berjalan real-time
 ============================================================ -->
 <!DOCTYPE html>
 <html lang="id">
@@ -41,9 +40,18 @@
   </div>
 
   <div class="dashboard" id="dashboardBox" style="display:none;">
-    <p>Login berhasil sebagai <b id="namaUserTampil"></b> — Lokasi: <b id="lokasiTampil"></b></p>
+    <div class="header-app">
+      <div class="header-kiri">
+        <strong>Sistem Fee BP & PCP</strong>
+        <span id="namaUserTampil"></span> — <span id="lokasiTampil"></span>
+      </div>
+      <div class="header-kanan">
+        <span id="jamBerjalan"></span>
+        <button onclick="prosesLogout()">Keluar</button>
+      </div>
+    </div>
+
     <p>(Halaman Pendaftaran menyusul di langkah berikutnya)</p>
-    <button onclick="prosesLogout()">Keluar</button>
   </div>
 
   <script src="js/api.js"></script>
