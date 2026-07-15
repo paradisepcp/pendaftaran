@@ -1,0 +1,52 @@
+<!-- ============================================================
+     FILE    : index.html
+     VERSION : 0.0.2
+     DIPERBARUI : 15 Juli 2026
+     PERUBAHAN : username jadi dropdown (isi dari getDaftarUsernameAktif),
+                 password dapat tombol toggle lihat/sembunyikan
+============================================================ -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistem Fee BP & PCP</title>
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+  <div class="login-box" id="loginBox">
+    <h1>Sistem Fee BP & PCP</h1>
+
+    <label>Username</label>
+    <select id="username">
+      <option value="">-- Pilih Username --</option>
+    </select>
+
+    <label>Password</label>
+    <div class="password-wrapper">
+      <input type="password" id="password" autocomplete="current-password">
+      <button type="button" class="btn-toggle-mata" id="btnToggleMata" onclick="toggleMataPassword()">👁</button>
+    </div>
+
+    <label>Lokasi Kerja</label>
+    <div class="pilihan-lokasi">
+      <button type="button" class="btn-lokasi" data-lokasi="BP" onclick="pilihLokasi('BP')">BP</button>
+      <button type="button" class="btn-lokasi" data-lokasi="PCP" onclick="pilihLokasi('PCP')">PCP</button>
+    </div>
+
+    <button id="btnLogin" onclick="prosesLogin()">Masuk</button>
+
+    <div id="pesanLogin"></div>
+  </div>
+
+  <div class="dashboard" id="dashboardBox" style="display:none;">
+    <p>Login berhasil sebagai <b id="namaUserTampil"></b> — Lokasi: <b id="lokasiTampil"></b></p>
+    <p>(Halaman Pendaftaran menyusul di langkah berikutnya)</p>
+    <button onclick="prosesLogout()">Keluar</button>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
