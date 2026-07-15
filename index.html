@@ -1,8 +1,9 @@
 <!-- ============================================================
      FILE    : index.html
-     VERSION : 0.0.3
+     VERSION : 0.0.4
      DIPERBARUI : 15 Juli 2026
-     PERUBAHAN : tambah header dashboard dengan jam berjalan real-time
+     PERUBAHAN : isi dashboard diganti jadi Halaman Pendaftaran
+                 (form input awal + listbox atas)
 ============================================================ -->
 <!DOCTYPE html>
 <html lang="id">
@@ -51,10 +52,102 @@
       </div>
     </div>
 
-    <p>(Halaman Pendaftaran menyusul di langkah berikutnya)</p>
+    <!-- ============ LISTBOX ATAS ============ -->
+    <h3>Rombongan Terdaftar Hari Ini</h3>
+    <table class="tabel-listbox" id="tabelPendaftaranAtas">
+      <thead>
+        <tr>
+          <th>Stiker</th><th>Waktu</th><th>Nama</th><th>No Member</th><th>HP</th><th>Armada</th><th>Asal</th><th>Lokasi</th>
+        </tr>
+      </thead>
+      <tbody id="isiTabelAtas">
+        <tr><td colspan="8" class="kosong">Memuat...</td></tr>
+      </tbody>
+    </table>
+
+    <!-- ============ FORM PENDAFTARAN ============ -->
+    <h3>Form Pendaftaran Baru</h3>
+    <div class="form-grid">
+      <div>
+        <label>Nomor Stiker</label>
+        <input type="number" id="fNomorStiker" onblur="cekNomorStiker()">
+      </div>
+      <div>
+        <label>Nomor Member (CSV)</label>
+        <input type="text" id="fNomorMember" placeholder="102,356,877">
+      </div>
+
+      <div>
+        <label>Nama</label>
+        <input type="text" id="fNama">
+      </div>
+      <div>
+        <label>No Handphone</label>
+        <input type="text" id="fNoHandphone" placeholder="081234...">
+      </div>
+
+      <div>
+        <label>Biro / PO / Asosiasi</label>
+        <input type="text" id="fBiroPo">
+      </div>
+      <div>
+        <label>Jenis Armada</label>
+        <select id="fJenisArmada">
+          <option value="">-- Pilih --</option>
+          <option value="BB">BB</option>
+          <option value="BK">BK</option>
+          <option value="HIACE">HIACE</option>
+          <option value="ELF">ELF</option>
+          <option value="ANGKOT">ANGKOT</option>
+          <option value="MP">MP</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Jumlah Armada</label>
+        <input type="number" id="fJumlahArmada" min="1" value="1">
+      </div>
+      <div>
+        <label>Jumlah Orang</label>
+        <input type="text" id="fJumlahOrang">
+      </div>
+
+      <div>
+        <label>Asal Rombongan</label>
+        <input type="text" id="fAsalRombongan">
+      </div>
+      <div>
+        <label>Freelance</label>
+        <input type="text" id="fFreelance">
+      </div>
+    </div>
+
+    <button id="btnSimpanPendaftaran" onclick="prosesSimpanPendaftaran()">Simpan</button>
+    <div id="pesanPendaftaran"></div>
+  </div>
+
+  <!-- ============ MODAL: Peringatan Stiker Duplikat ============ -->
+  <div class="modal-overlay" id="modalStiker" style="display:none;">
+    <div class="modal-box">
+      <p id="teksModalStiker"></p>
+      <div class="modal-tombol">
+        <button onclick="tutupModalStiker(false)">Batal, Ganti Nomor</button>
+        <button onclick="tutupModalStiker(true)" class="btn-utama">Lanjutkan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ MODAL: Detail Transaksi (klik baris listbox) ============ -->
+  <div class="modal-overlay" id="modalDetail" style="display:none;">
+    <div class="modal-box">
+      <h3>Detail Transaksi</h3>
+      <div id="isiModalDetail"></div>
+      <button onclick="tutupModalDetail()">Tutup</button>
+    </div>
   </div>
 
   <script src="js/api.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/registration.js"></script>
 </body>
 </html>
