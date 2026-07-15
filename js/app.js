@@ -2,35 +2,31 @@
  * APLIKASI    : Sistem Fee BP & PCP
  * MODUL       : Frontend - Login
  * FILE        : app.js
- * VERSION     : 0.0.2
+ * VERSION     : 0.0.3
  * DIPERBARUI  : 15 Juli 2026
- * HALAMAN     : Halaman Login
+ * HALAMAN     : Halaman Login & Header Dashboard
  * SPREADSHEET : - (lewat backend action 'login', 'daftarUsername')
  * ------------------------------------------------------------
  * ISI FILE INI:
- * - isiDropdownUsername() : ambil daftar username aktif dari backend,
- *   isi ke elemen <select id="username">
- * - toggleMataPassword()  : tukar tampilan password antara tersembunyi
- *   dan terlihat, ganti ikon mata
+ * - isiDropdownUsername() : ambil daftar username aktif dari backend
+ * - toggleMataPassword()  : tukar tampilan password
  * - pilihLokasi(lokasi)   : tandai tombol BP/PCP yang dipilih
- * - prosesLogin()         : kirim username/password/lokasi ke backend
- * - prosesLogout()        : hapus sesi, kembali ke form login
+ * - prosesLogin()         : kirim ke backend, simpan sesi
+ * - prosesLogout()        : hapus sesi
  * - cekSesiSaatBuka()     : cek sesi tersimpan saat halaman dibuka
+ * - mulaiJamBerjalan()    : update jam di pojok kanan atas tiap detik
  *
- * BOLEH DIEDIT BEBAS   : teks pesan error/sukses, ikon mata
+ * BOLEH DIEDIT BEBAS   : format tampilan jam
  * HATI-HATI DIEDIT     : nama key localStorage ('sesiAktif')
  * ============================================================ */
 
 
 let lokasiTerpilih = null;
+let intervalJam = null; // simpan referensi interval supaya bisa dihentikan saat logout
 
 
 // ------------------------------------------------------------
 // BAGIAN: Isi Dropdown Username
-// Dipanggil sekali saat halaman dibuka. Mengambil daftar username
-// aktif dari backend (tanpa perlu login dulu) dan mengisi opsi
-// dropdown. Ditampilkan nama crew supaya gampang dikenali, tapi
-// value yang dikirim tetap username asli.
 // ------------------------------------------------------------
 async function isiDropdownUsername() {
   const select = document.getElementById('username');
@@ -43,8 +39,6 @@ async function isiDropdownUsername() {
       select.appendChild(opsi);
     });
   } catch (err) {
-    // Kalau gagal ambil daftar (misal offline), biarkan dropdown
-    // cuma ada opsi kosong — admin masih bisa coba lagi nanti.
     console.error('Gagal ambil daftar username:', err.message);
   }
 }
@@ -55,8 +49,6 @@ async function isiDropdownUsername() {
 
 // ------------------------------------------------------------
 // BAGIAN: Toggle Lihat/Sembunyikan Password
-// Klik ikon mata untuk beralih antara password tersembunyi (titik)
-// dan terlihat (teks biasa), supaya admin bisa cek ketikannya benar.
 // ------------------------------------------------------------
 function toggleMataPassword() {
   const input = document.getElementById('password');
@@ -138,13 +130,49 @@ async function prosesLogin() {
 
 
 // ------------------------------------------------------------
-// BAGIAN: Tampilkan Dashboard (Placeholder)
+// BAGIAN: Tampilkan Dashboard
+// Setelah tampilkan info user, langsung nyalakan jam berjalan.
 // ------------------------------------------------------------
 function tampilkanDashboard(data) {
   document.getElementById('loginBox').style.display = 'none';
   document.getElementById('dashboardBox').style.display = 'block';
   document.getElementById('namaUserTampil').textContent = data.namaCrew;
   document.getElementById('lokasiTampil').textContent = data.lokasiKerja;
+  mulaiJamBerjalan();
+}
+// ------------------------------------------------------------
+// BAGIAN INI SELESAI
+// ------------------------------------------------------------
+
+
+// ------------------------------------------------------------
+// BAGIAN: Jam Berjalan
+// Menampilkan tanggal + jam + menit + detik saat ini di pojok
+// kanan atas, update tiap detik. Pakai zona waktu Asia/Jakarta
+// supaya konsisten dengan data yang disimpan di backend, meskipun
+// device admin di-set zona waktu lain.
+// ------------------------------------------------------------
+function mulaiJamBerjalan() {
+  const elemen = document.getElementById('jamBerjalan');
+
+  function update() {
+    const sekarang = new Date();
+    const teks = sekarang.toLocaleString('id-ID', {
+      timeZone: 'Asia/Jakarta',
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+    elemen.textContent = teks;
+  }
+
+  update(); // langsung tampil, tidak nunggu 1 detik pertama
+  if (intervalJam) clearInterval(intervalJam); // cegah dobel interval kalau dipanggil ulang
+  intervalJam = setInterval(update, 1000);
 }
 // ------------------------------------------------------------
 // BAGIAN INI SELESAI
@@ -153,6 +181,8 @@ function tampilkanDashboard(data) {
 
 // ------------------------------------------------------------
 // BAGIAN: Logout
+// Hentikan interval jam supaya tidak jalan terus di background
+// setelah kembali ke halaman login.
 // ------------------------------------------------------------
 async function prosesLogout() {
   const sesi = JSON.parse(localStorage.getItem('sesiAktif') || '{}');
@@ -161,6 +191,12 @@ async function prosesLogout() {
   } catch (err) {
     // Tidak masalah kalau gagal — tetap lanjut hapus sesi lokal.
   }
+
+  if (intervalJam) {
+    clearInterval(intervalJam);
+    intervalJam = null;
+  }
+
   localStorage.removeItem('sesiAktif');
   document.getElementById('dashboardBox').style.display = 'none';
   document.getElementById('loginBox').style.display = 'block';
@@ -209,12 +245,14 @@ cekSesiSaatBuka();
  * ------------------------------------------------------------
  * VER 0.0.1  MASTER
  *            Versi awal. Login dengan pilihan lokasi BP/PCP, simpan
- *            sesi di localStorage, cek sesi otomatis saat halaman
- *            dibuka, dan logout.
+ *            sesi di localStorage, cek sesi otomatis, logout.
  *
  * VER 0.0.2  TAMBAH FITUR
- *            Username diubah dari input teks bebas jadi dropdown
- *            (isiDropdownUsername), ambil daftar dari backend supaya
- *            tidak ada typo username. Tambah toggleMataPassword()
- *            untuk lihat/sembunyikan ketikan password.
+ *            Username jadi dropdown, tambah toggleMataPassword().
+ *
+ * VER 0.0.3  TAMBAH FITUR
+ *            Tambah mulaiJamBerjalan() — jam+tanggal real-time di
+ *            pojok kanan atas dashboard, update tiap detik, pakai
+ *            zona waktu Asia/Jakarta. Interval dihentikan otomatis
+ *            saat logout supaya tidak jalan terus di background.
  * ============================================================ */
