@@ -139,6 +139,7 @@ function tampilkanDashboard(data) {
   document.getElementById('namaUserTampil').textContent = data.namaCrew;
   document.getElementById('lokasiTampil').textContent = data.lokasiKerja;
   mulaiJamBerjalan();
+  muatListboxAtas(); // BARU — muat listbox begitu dashboard tampil
 }
 // ------------------------------------------------------------
 // BAGIAN INI SELESAI
